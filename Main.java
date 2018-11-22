@@ -54,8 +54,9 @@ public class Main extends AppCompatActivity {
 
         public SQLiteHelper(Context context) {
             super(context, DBInfo.DBNAME , null, 1);
+            Log.d(" -- 2 --","SQLiteHelper 생성자 내부1");
             this.getWritableDatabase();
-            Log.d(" -- 2 --","SQLiteHelper 생성자 내부");
+            Log.d(" -- 2.5 --","SQLiteHelper 생성자 내부2");
         }
 
         @Override
@@ -67,7 +68,7 @@ public class Main extends AppCompatActivity {
                             "   %s TEXT, " +
                             "   %s TEXT, " +
                             "   %s TEXT, " +
-                            "   %s TEXT, " +
+                            "   %s TEXT," +
                             "   %s TEXT, " +
                             "   %s TEXT " +
                                     ")" ,
@@ -107,7 +108,7 @@ public class Main extends AppCompatActivity {
                                 ")",
 
                         DBInfo.MBR_TABLE, DBInfo.MBR_NAME, DBInfo.MBR_EMAIL, DBInfo.MBR_PASS, DBInfo.MBR_ADDR, DBInfo.MBR_PHONE, DBInfo.MBR_PHOTO,
-                        names[i], emails[i], '1', addr[i], "010-1234-567"+i,"PHOTO_"+i+1
+                        names[i], emails[i], '1', addr[i], "010-1234-567"+i,"photo_"+ i+1
                 ));
             }
             Log.d("******* 7 ********","친구등록완료");

@@ -1,6 +1,19 @@
 package com.example.kgitbank.kakao;
 
 public class Member {
+    @Override
+    public String toString() {
+        return "Member{" +
+                "seq=" + seq +
+                ", name='" + name + '\'' +
+                ", pass='" + pass + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", addr='" + addr + '\'' +
+                ", photo='" + photo + '\'' +
+                '}';
+    }
+
     int seq;
     String name, pass, email, phone, addr, photo;
 
