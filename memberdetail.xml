@@ -14,9 +14,9 @@
       android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="150dp"
-        android:layout_height="200dp">
+        android:layout_height="300dp">
       <ImageView
-          android:id="@+id/profile"
+          android:id="@+id/photo"
           android:background="@drawable/layout_border"
           android:layout_width="match_parent"
           android:layout_height="match_parent" />
@@ -25,7 +25,7 @@
         android:layout_marginLeft="10dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="300dp">
 
 
       <LinearLayout android:layout_height="wrap_content"
@@ -89,7 +89,21 @@
             android:layout_height="wrap_content"
             android:text=":"/>
       </LinearLayout>
-
+      <LinearLayout android:layout_height="wrap_content"
+          android:layout_width="match_parent"
+          android:orientation="horizontal"
+          android:layout_marginTop="10dp"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:text="PASSWORD "/>
+        <TextView
+            android:id="@+id/pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""/>
+      </LinearLayout>
     </LinearLayout>
 
   </LinearLayout>

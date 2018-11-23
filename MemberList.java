@@ -1,11 +1,13 @@
 package com.example.kgitbank.kakao;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.media.Image;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,16 +35,18 @@ public class MemberList extends AppCompatActivity {
         final ListView mbrList = findViewById(R.id.mbrList);
         final ItemList query = new ItemList(ctx);
         Log.d("친구목록","*******");
+
         mbrList.setAdapter(new MemberAdapter(ctx,(ArrayList<Member>) new Main.ListService() {
             @Override
             public List<?> perfome() {
                 return query.execute();
             }
         }.perfome()));
+
         findViewById(R.id.btnAdd).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ctx, MemberDetail.class));
+                startActivity(new Intent(ctx, MemberAdd.class));
             }
         });
         //디테일 처리
@@ -53,11 +57,41 @@ public class MemberList extends AppCompatActivity {
                 Member m =  (Member)mbrList.getItemAtPosition(i);
                 Log.d("선택한 ID",m.seq+"");
                 Intent intent = new Intent(ctx, MemberDetail.class);
-                intent.putExtra("seq",m.seq);
+                intent.putExtra("seq",m.seq+"");
                 startActivity(intent);
             }
         });
 
+        mbrList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> p, View v, int i, long l) {
+                Member m = (Member)mbrList.getItemAtPosition(i);
+                new AlertDialog.Builder(ctx)
+                        .setTitle("삭 제 ")
+                        .setMessage(" 정말 삭제 ?")
+                        .setPositiveButton(
+                                android.R.string.yes,
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // 삭제 쿼리 실행
+                                        Toast.makeText(ctx, "삭제 완료", Toast.LENGTH_LONG).show();
+                                        startActivity(new Intent(ctx, MemberList.class));
+                                    }
+                                }
+                        )
+                        .setNegativeButton(
+                                android.R.string.no,
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Toast.makeText(ctx,"삭제 취소",Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                        ).show();
+                return true;
+            }
+        });
         //삭제 처리
 
     } // onCreate End

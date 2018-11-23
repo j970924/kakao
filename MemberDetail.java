@@ -24,16 +24,10 @@ public class MemberDetail extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final Context ctx = MemberDetail.this;
-        final ImageView profile = findViewById(R.id.profile);
-        final TextView name = findViewById(R.id.name);
-        final TextView email = findViewById(R.id.email);
-        final TextView phone = findViewById(R.id.phone);
-        final TextView addr = findViewById(R.id.addr);
         setContentView(R.layout.memberdetail);
-        ItemDetail itemDetail = new ItemDetail(ctx);
+        final Context ctx = MemberDetail.this;
         Intent intent = this.getIntent();
-        String seq = intent.getExtras().getString("seq");
+        String seq = intent.getExtras().getString("seq" );
         final ItemDetail query = new ItemDetail(ctx);
         query.seq = seq;
         Member m  = (Member) new Main.ObjectService() {
@@ -44,8 +38,28 @@ public class MemberDetail extends AppCompatActivity {
         }.perfome();
         Log.d("선택한 멤버 정보",m.toString());
 
-        String spec = m.seq + "/"+m.addr+"/"+m.email+"/"+m.name+"/"+m.pass+"/"+m.photo+"/"+m.phone;
+        final String spec = m.seq + "/"+m.addr+"/"+m.email+"/"+m.name+"/"+m.pass+"/"+m.photo+"/"+m.phone;
         String[] arr = spec.split("/");
+
+        TextView name = findViewById(R.id.name);
+        name.setText(arr[3]);
+        TextView email = findViewById(R.id.email);
+        email.setText(arr[2]);
+        TextView phone = findViewById(R.id.phone);
+        phone.setText(arr[6]);
+        TextView addr = findViewById(R.id.addr);
+        addr.setText(arr[1]);
+        TextView pass = findViewById(R.id.pass);
+        pass.setText(arr[4]);
+        ImageView photo = findViewById(R.id.photo);
+        Log.d("프로필사진 :: ",arr[5].toLowerCase());
+        photo.setImageDrawable(
+                getResources()
+                        .getDrawable(
+                                getResources()
+                                        .getIdentifier(this.getPackageName()+":drawable/"+arr[5].toLowerCase(),null,null), ctx.getTheme()
+                        )
+        );
         //선택한 멤버 정보를 로그로 출력하기
         findViewById(R.id.listBtn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,12 +96,12 @@ public class MemberDetail extends AppCompatActivity {
 
     private class ItemDetail extends  DetailQuery{
         String seq;
-
         public ItemDetail(Context ctx) {
             super(ctx);
         }
         public Member execute(){
            Member m = null;
+           Log.d("seq값",seq);
            Cursor c = this.getDatabase().rawQuery(
                    String.format(" SELECT * FROM %s WHERE %s LIKE %s ",
                            DBInfo.MBR_TABLE, DBInfo.MBR_SEQ,seq),null
@@ -112,15 +126,4 @@ public class MemberDetail extends AppCompatActivity {
         }
     }
 
-    static class ViewHolder{
-        ImageView profile;
-        TextView name, phone, email, addr;
-    }
-
-    public View getView(View v){
-        ViewHolder holder;
-        if(v==null){
-            holder.name = v.findViewById(R.id.name);
-        }
-    }
 }
