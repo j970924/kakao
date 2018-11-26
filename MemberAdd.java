@@ -1,6 +1,7 @@
 package com.example.kgitbank.kakao;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.opengl.ETC1;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,6 +33,15 @@ public class MemberAdd extends AppCompatActivity {
         findViewById(R.id.addBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Member member = new Member();
+                final ItemAdd query = new ItemAdd(ctx);
+                member.setName(name.getText().toString());
+                member.setEmail(email.getText().toString());
+                member.setPhone(phone.getText().toString());
+                member.setAddr(addr.getText().toString());
+                member.setPass("1");
+                member.setPhoto("photo_"+ member.getSeq() +"1");
+                query.member = member;
 
             }
         });
@@ -44,5 +54,49 @@ public class MemberAdd extends AppCompatActivity {
         });
     } // onCreate End
 
+    private class AddQuery extends Main.QueryFactory{
+        Main.SQLiteHelper helper;
+
+        public AddQuery(Context ctx) {
+            super(ctx);
+            helper = new Main.SQLiteHelper(ctx);
+        }
+
+        @Override
+        public SQLiteDatabase getDatabase() {
+            return helper.getWritableDatabase();
+        }
+    }
+
+    private class ItemAdd extends  AddQuery{
+        Member member;
+        public ItemAdd(Context ctx) {
+            super(ctx);
+            member = new Member();
+        }
+
+        public void execute(){
+            String sql = String.format(
+                    " INSERT INTO %s " +
+                            " ( %s ," +
+                            "   %s ," +
+                            "   %s ," +
+                            "   %s ," +
+                            "   %s ," +
+                            "   %s " +
+                            ")VALUES(" +
+                            "'%s', " +
+                            "'%s', " +
+                            "'%s', " +
+                            "'%s', " +
+                            "'%s', " +
+                            "'%s' " +
+                            ")",
+                    DBInfo.MBR_TABLE, DBInfo.MBR_NAME, DBInfo.MBR_EMAIL, DBInfo.MBR_PASS, DBInfo.MBR_ADDR, DBInfo.MBR_PHONE, DBInfo.MBR_PHOTO,
+                    member.name, member.email, member.pass, member.addr, member.phone, member.photo
+                    );
+            getDatabase().execSQL(sql);
+        }
+    }
 
 }

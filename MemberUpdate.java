@@ -59,7 +59,7 @@ public class MemberUpdate extends AppCompatActivity {
                 member.setPhone((phone.getText().equals(" "))? arr[6] : phone.getText().toString());
                 member.setAddr((addr.getText().equals(" "))? arr[1] : addr.getText().toString());
                 member.setPass((pass.getText().equals(" "))? arr[4] : pass.getText().toString());
-                
+
                 query.member = member;
 
                 new Main.ExecuteService() {

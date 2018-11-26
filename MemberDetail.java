@@ -17,6 +17,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kgitbank.kakao.util.Album;
+import com.example.kgitbank.kakao.util.Email;
+import com.example.kgitbank.kakao.util.Phone;
+
 import java.util.ArrayList;
 
 public class MemberDetail extends AppCompatActivity {
@@ -30,7 +34,7 @@ public class MemberDetail extends AppCompatActivity {
         String seq = intent.getExtras().getString("seq" );
         final ItemDetail query = new ItemDetail(ctx);
         query.seq = seq;
-        Member m  = (Member) new Main.ObjectService() {
+        final Member m  = (Member) new Main.ObjectService() {
             @Override
             public Object perfome() {
                 return query.execute();
@@ -74,6 +78,65 @@ public class MemberDetail extends AppCompatActivity {
                 Intent intent = new Intent(ctx,MemberUpdate.class);
                 intent.putExtra("spec",spec);
                 startActivity(intent);
+            }
+        });
+
+        findViewById(R.id.callBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Phone phone = new Phone(ctx, MemberDetail.this);
+                phone.setPhoneNum(m.phone);
+                phone.dial();
+            }
+        });
+
+        findViewById(R.id.dialBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        findViewById(R.id.smsBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        findViewById(R.id.emailBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Email email = new Email();
+                email.sendEmail("j970924@naver.com");
+            }
+        });
+
+        findViewById(R.id.albumBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ctx,Album.class));
+            }
+        });
+
+        findViewById(R.id.movieBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        findViewById(R.id.mapBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        findViewById(R.id.musicBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     } //onCreate End
