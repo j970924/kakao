@@ -1,0 +1,33 @@
+<!--
+  Generated template for the ResetemailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>resetemail</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <ion-item>
+        <ion-label floating>Currnet Email</ion-label>
+        <ion-input type="email" [(ngModel)]="account.email"></ion-input>
+      </ion-item>
+    
+      <ion-item>
+        <ion-label floating>New Email</ion-label>
+        <ion-input type="email" [(ngModel)]="account.newemail"></ion-input>
+      </ion-item>
+
+      <ion-item>
+          <ion-label floating>Password</ion-label>
+          <ion-input type="password" [(ngModel)]="account.password"></ion-input>
+      </ion-item>
+      <div class='divider' style='width: 100%; height: 30px;'></div>
+      <button ion-button full (click)="updateemail()" color="dark">완료</button>
+</ion-content>
